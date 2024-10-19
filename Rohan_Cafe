@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohan Cafe and Bakery</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #FFF3E0;
+            color: #5D4037;
+        }
+        nav {
+            background-color: #795548;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        nav ul li {
+            margin-left: 1rem;
+        }
+        nav ul li a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #FFE0B2;
+        }
+        .nav-button {
+            background-color: #FF5722;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .nav-button:hover {
+            background-color: #E64A19;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        .search-input {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+        }
+        .search-button {
+            background-color: #FF8F00;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .coffee-shop-photo {
+            width: 100%;
+            height: 400px;
+            background-image: url('/placeholder.svg?height=400&width=1200');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .coffee-shop-photo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .coffee-shop-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #FFFFFF;
+            z-index: 1;
+        }
+        .coffee-shop-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .coffee-shop-text p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        header {
+            background-color: #D7CCC8;
+            color: #4E342E;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: "☕";
+            font-size: 10rem;
+            position: absolute;
+            top: -2rem;
+            left: -2rem;
+            opacity: 0.1;
+            transform: rotate(-20deg);
+        }
+        header::after {
+            content: "🥐";
+            font-size: 10rem;
+            position: absolute;
+            bottom: -2rem;
+            right: -2rem;
+            opacity: 0.1;
+            transform: rotate(20deg);
+        }
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            margin-bottom: 0;
+            color: #FF5722;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #FF8F00;
+            border-bottom: 2px solid #FFE0B2;
+            padding-bottom: 0.5rem;
+        }
+        .menu {
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .menu li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .menu li::before {
+            content: "•";
+            color: #FF5722;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -0.5rem;
+        }
+        .featured-product {
+            display: flex;
+            align-items: center;
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .featured-product img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 2rem;
+        }
+        .testimonials {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        .testimonial {
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 1.5rem;
+            width: calc(33.33% - 1rem);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .testimonial img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        .food-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .food-item {
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .food-item:hover {
+            transform: translateY(-5px);
+        }
+        .food-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .food-item-content {
+            padding: 1.5rem;
+        }
+        .food-item-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #FF5722;
+        }
+        .food-item-description {
+            font-size: 0.9rem;
+            color: #5D4037;
+            margin-bottom: 1rem;
+        }
+        .food-item-price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #FF8F00;
+        }
+        footer {
+            background-color: #795548;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #FF5722;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: #E64A19;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <div class="search-container">
+                    <input type="text" placeholder="Search..." class="search-input" aria-label="Search">
+                    <button type="submit" class="search-button" aria-label="Submit search">🔍</button>
+                </div>
+            </li>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#branches">Branches</a></li>
+            <li><a href="#login">Log In</a></li>
+            <li><button class="nav-button">Order Now</button></li>
+        </ul>
+    </nav>
+
+    <div class="coffee-shop-photo">
+        <div class="coffee-shop-text">
+            <h2>Welcome to Rohan Cafe and Bakery</h2>
+            <p>Experience the perfect blend of warmth, flavor, and community in every cup and bite.</p>
+        </div>
+    </div>
+
+    <header>
+        <h1>Rohan Cafe and Bakery</h1>
+        <p>Delicious treats and aromatic coffee</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>About Us</h2>
+            <p>Step into a world of heavenly aromas and mouthwatering delights! Our cozy cafe is the perfect spot to savor the finest coffee and indulge in freshly baked treats. Whether you're catching up with friends or seeking a quiet corner to work, Rohan Cafe and Bakery is your home away from home.</p>
+            <a href="#" class="cta-button">View Full Menu</a>
+        </section>
+
+        <section class="featured-product">
+            <img src="/placeholder.svg?height=200&width=200" alt="Signature Rohan Blend Coffee" />
+            <div>
+                <h2>Featured: Signature Rohan Blend</h2>
+                <p>Experience the rich, bold flavors of our house specialty. This carefully crafted blend combines notes of chocolate, caramel, and a hint of citrus for a truly unforgettable cup of coffee.</p>
+                <a href="#" class="cta-button">Try Now</a>
+            </div>
+        </section>
+
+        <section class="menu">
+            <h2>Our Menu Highlights</h2>
+            <ul>
+                <li>Rich, Artisanal Coffee Selection</li>
+                <li>Buttery, Flaky Croissants</li>
+                <li>Decadent Chocolate Lava Cake</li>
+                <li>Energizing Acai Bowls</li>
+                <li>Savory Quiches and Sandwiches</li>
+            </ul>
+        </section>
+
+        <section class="food-gallery">
+            <h2>Our Delicious Offerings</h2>
+            <div class="food-item">
+                <img src="/placeholder.svg?height=200&width=300" alt="Artisanal Coffee" />
+                <div class="food-item-content">
+                    <div class="food-item-title">Artisanal Coffee</div>
+                    <div class="food-item-description">Our signature blend, roasted to perfection. Rich, smooth, and aromatic with notes of chocolate and caramel.</div>
+                    <div class="food-item-price">$3.50 - $4.50</div>
+                </div>
+            </div>
+            <div class="food-item">
+                <img src="/placeholder.svg?height=200&width=300" alt="Flaky Croissant" />
+                <div class="food-item-content">
+                    <div class="food-item-title">Flaky Croissant</div>
+                    <div class="food-item-description">Buttery, golden-brown croissants with a delicate, flaky texture. Perfect plain or filled with chocolate or almond cream.</div>
+                    <div class="food-item-price">$2.75 - $3.50</div>
+                </div>
+            </div>
+            <div class="food-item">
+                <img src="/placeholder.svg?height=200&width=300" alt="Chocolate Lava Cake" />
+                <div class="food-item-content">
+                    <div class="food-item-title">Chocolate Lava Cake</div>
+                    <div class="food-item-description">Decadent chocolate cake with a gooey, molten center. Served warm with a scoop of vanilla ice cream.</div>
+                    <div class="food-item-price">$6.95</div>
+                </div>
+            </div>
+            <div class="food-item">
+                <img src="/placeholder.svg?height=200&width=300" alt="Acai Bowl" />
+                <div class="food-item-content">
+                    <div class="food-item-title">Acai Bowl</div>
+                    <div class="food-item-description">A refreshing blend of acai berries topped with granola, fresh fruits, and a drizzle of honey. A healthy and delicious start to your day.</div>
+                    <div class="food-item-price">$8.50</div>
+                </div>
+            </div>
+            <div class="food-item">
+                <img src="/placeholder.svg?height=200&width=300" alt="Quiche" />
+                <div class="food-item-content">
+                    <div class="food-item-title">Quiche</div>
+                    <div class="food-item-description">Savory egg custard in a buttery crust, filled with your choice of vegetables, cheeses, and meats. Served with a side salad.</div>
+                    <div class="food-item-price">$7.95</div>
+                </div>
+            </div>
+            <div class="food-item">
+                <img src="/placeholder.svg?height=200&width=300" alt="Gourmet Sandwich" />
+                <div class="food-item-content">
+                    <div class="food-item-title">Gourmet Sandwich</div>
+                    <div class="food-item-description">Artisanal bread filled with premium meats, cheeses, and fresh vegetables. Choose from our daily selection of unique combinations.</div>
+                    <div class="food-item-price">$8.95 - $10.95</div>
+                </div>
+            </div>
+            <div class="food-item">
+                <img src="/placeholder.svg?height=200&width=300" alt="Fresh Fruit Tart" />
+                <div class="food-item-content">
+                    <div  class="food-item-title">Fresh Fruit Tart</div>
+                    <div class="food-item-description">A buttery shortbread crust filled with silky pastry cream and topped with an assortment of seasonal fresh fruits.</div>
+                    <div class="food-item-price">$5.50</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <div class="testimonial">
+                <img src="/placeholder.svg?height=60&width=60" alt="Customer 1" />
+                <p>"The coffee at Rohan Cafe is simply unmatched. It's my daily morning ritual!"</p>
+                <p><strong>- Sarah J.</strong></p>
+            </div>
+            <div class="testimonial">
+                <img src="/placeholder.svg?height=60&width=60" alt="Customer 2" />
+                <p>"Their pastries are to die for. The chocolate croissant is heavenly!"</p>
+                <p><strong>- Mike T.</strong></p>
+            </div>
+            <div class="testimonial">
+                <img src="/placeholder.svg?height=60&width=60" alt="Customer 3" />
+                <p>"Great atmosphere for working or catching up with friends. Love it here!"</p>
+                <p><strong>- Emily R.</strong></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Visit us at: 123 Coffee Street, Bakeryville | Phone: (555) 123-4567</p>
+        <p>Open Daily: 7AM - 8PM</p>
+        <p>&copy; 2023 Rohan Cafe and Bakery. All rights reserved.</p>
+    </footer>
+</body>
+</html>
